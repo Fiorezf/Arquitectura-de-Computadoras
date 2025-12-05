@@ -1,0 +1,18 @@
+{ Realiza tabla del 4 } 
+
+ORG 1000h
+num db 4
+vueltas db 9
+resul db 0 
+
+ORG 2000h
+mov al, num 
+mov cl, vueltas
+loop: 
+ add al, 4
+ dec cl 
+ cmp cl, 0 
+ jnz loop 
+mov resul, al 
+hlt
+END
