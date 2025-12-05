@@ -1,0 +1,14 @@
+{sincrementa uno hasta llegar a 10}
+
+ORG 1000h
+num db 0
+
+ORG 2000h
+mov al, num 
+loop: 
+inc al 
+cmp al, 10
+jnz loop 
+mov num, al
+hlt
+END
