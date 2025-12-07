@@ -1,0 +1,27 @@
+{ En base a un lyric de Taylor Swift, va recorriendo caracter por caracter y cuando encuentre la b en la frase termina. }
+
+ORG 1000h
+MENSAJE db "LoSing him was  blue, like I'd never known"
+FIN db ?
+
+ORG 2000h
+mov bx, offset MENSAJE    
+mov al, 1
+mov cl, offset FIN - offset MENSAJE
+
+loop:
+    mov dl, [bx]          
+    cmp cl, 0             
+    jz fine
+    dec cl 
+
+    cmp dl, 62h           
+    jz fine                
+    int 7                
+
+    inc bx               
+    jmp loop
+
+fine:
+    hlt
+END
