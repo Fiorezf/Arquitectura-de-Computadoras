@@ -1,0 +1,39 @@
+{multiplicación de números}
+
+ORG 1000h
+A db 5
+B db 2
+RES dw ? 
+
+ORG 3000h
+mul: 
+mov dx, 0 
+ mov bx, sp 
+ add bx, 2
+ mov bx, [bx]
+ mov cx, [bx] 
+ add bx, 1
+ mov bx, [bx] 
+ mov ax, [bx] 
+ loop: 
+  add dx, ax 
+  dec cx 
+  cmp cx, 0 
+  jnz loop 
+  
+ ret 
+
+
+ORG 2000h
+mov ax, offset A 
+push ax 
+mov ax, offset B
+push ax 
+call mul 
+pop ax 
+pop ax 
+mov RES, dx
+
+int 0 
+
+END
