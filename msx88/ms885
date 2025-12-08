@@ -1,0 +1,31 @@
+{ Se ingresa una nota hasta que ésta sea igual a 8. Si es igual a 8 se muestra un mensaje que dice "puede obtener la beca" 
+
+ORG 1000h
+nota db ? 
+string1 db "ingrese la nota del estudiante",0Dh,0Ah
+fin1 db ?
+string2 db "Puede obtener la beca",0Dh,0Ah
+fin2 db ?
+string3 db "ingrese otra vez",0Dh,0Ah
+fin3 db ? 
+ORG 2000h
+mov bx, offset string1
+mov al, offset fin1 - offset string1 
+int 7
+loop: 
+ mov bx, offset nota 
+ int 6 
+ 
+ cmp byte ptr [bx],38h 
+ jz mostrar 
+ mov bx, offset string3
+ mov al, offset fin3 - offset string3 
+ int 7
+ jmp loop 
+mostrar: 
+ mov bx, offset string2
+ mov al, offset fin2 - offset string2 
+ int 7
+int 0 
+END
+
