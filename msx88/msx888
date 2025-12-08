@@ -1,0 +1,28 @@
+{ Es_Mayus: recibe un caracter en al y retorna en ah el valor 0FFh si es mayuscula y 0 si es minuscula } 
+
+ORG 1000H 
+car db "C"
+resul db ? 
+
+   ORG 3000H
+es_mayus: 
+ mov ah, 0 
+ mov dl, 41h 
+ mov dh, 5Ah
+ cmp al, dl
+ js fin
+ cmp al, dh
+ jns fin 
+ mov ah, 0FFh
+ 
+ fin:
+  ret 
+
+
+   ORG 2000H   
+mov al, car 
+call es_mayus 
+mov resul, ah 
+   
+hlt 
+END 
