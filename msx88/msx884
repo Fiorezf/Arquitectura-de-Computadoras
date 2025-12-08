@@ -1,0 +1,25 @@
+{ Va restando los años hasta que la edad de 35. Llegado al numero 35 se muestra un mensaje que dice "feliz cumpleaños" } 
+
+ORG 1000h
+ANIOACT dw 2020
+STRING db "Feliz cumpleanios!"
+FIN db ?
+
+ORG 2000h
+mov bx, offset STRING 
+mov al, offset FIN - offset STRING
+mov cx, ANIOACT
+mov dx, 2020
+
+loop: 
+ mov cx,dx 
+ sub cx, 1990
+ cmp cx, 35 
+ jz mostrar 
+ inc dx
+ jmp loop
+
+mostrar: 
+ int 7 
+    hlt
+END
