@@ -1,0 +1,34 @@
+{ Contar_car: Recibe la dirección de comienzo de un string en BX, su longitud en Al y el caracter a contar en AH. Retorna en CL, la cantidad de veces que aparece el caracter } 
+
+ORG 1000H 
+string db "hola"
+car db "a"
+cant db ?
+
+   ORG 3000H
+   mov cl, 0
+contar_car: 
+  cmp ah, [bx]
+  jz sumar 
+  dec al
+  inc bx 
+  cmp al, 0 
+  jnz contar_car 
+sumar: 
+   inc cl   
+   dec al
+   inc bx 
+   cmp al, 0 
+  jnz contar_car 
+  ret 
+
+
+   ORG 2000H   
+   mov bx, offset string 
+   mov al, 4
+   mov ah, car 
+   call contar_car 
+   mov cant, cl 
+   
+hlt 
+END 
