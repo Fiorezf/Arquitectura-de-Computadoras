@@ -1,0 +1,40 @@
+ORG 1000h
+string db "Ingrese su numero de codigo"
+fin db ?
+num db ? 
+string2 db "obtiene la promocion"
+fin2 db ? 
+string3 db "no obtiene la promocion"
+fin3 db ? 
+
+ORG 3000h
+comprobar: 
+ cmp ah, 1
+ js no_promo 
+ cmp ah, 10
+ js no_promo 
+ mov bx, offset string2
+ mov al, offset fin2 - offset string2 
+ int 7
+ jmp  fine
+ no_promo:
+ mov bx, offset string3 
+ mov al, offset fin3 - offset string3
+ int 7 
+ 
+ fine: 
+ ret 
+
+
+ORG 2000h
+mov bx, offset string 
+mov al, offset fin - offset string 
+int 7 
+mov bx, offset num
+int 6
+mov ah, [bx] 
+call comprobar 
+
+hlt 
+
+END
