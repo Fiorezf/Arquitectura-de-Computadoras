@@ -1,0 +1,19 @@
+{ Escribir un programa que muestre en pantalla las letras mayusculas de la A a la Z } 
+
+
+ORG 1000h
+A db "A" 
+
+
+ORG 2000h
+mov bx, offset A 
+mov al, 1 
+loop: 
+ int 7
+ cmp byte ptr [bx], 5ah
+ jz fin 
+ inc A
+ jmp loop 
+fin: 
+ int 0
+END
