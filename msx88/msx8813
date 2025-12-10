@@ -1,0 +1,37 @@
+  cb equ 33h 
+  pb equ 31h
+   
+   ORG 1000H 
+patron db 10000000b
+string1 db "luces andan"
+fin db ?
+string2 db "luces no andan" 
+fin2 db ? 
+
+   ORG 3000H
+
+   
+   ORG 2000H  
+   mov al, 0
+   out cb, al 
+   mov al, patron 
+   out pb, al 
+
+  in al, pb 
+  and al, 10000000b
+  cmp al, 0
+  jz apagada 
+
+  mov bx, offset string1
+  mov al, offset fin - offset string1
+  int 7
+  jmp fine
+
+  apagada: 
+   mov bx, offset string2
+   mov al, offset fin2 - offset string2
+   int 7 
+  
+fine:
+hlt 
+END 
