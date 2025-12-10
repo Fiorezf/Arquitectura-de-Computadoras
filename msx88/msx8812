@@ -1,0 +1,51 @@
+{ Cuenta las a que hay en la palabra "navidad" y encience y apaga esa cantidad de veces las luces } 
+
+CB equ 33h 
+  PB equ 31h
+   
+   ORG 1000H 
+string db "navidad"
+fin db ? 
+car db "a" 
+
+   ORG 3000H
+   mov cl, 0 
+   contar:
+    mov ah, [bx]
+    cmp ch, ah 
+    jz sumar 
+    inc bx 
+    dec al 
+    cmp al, 0 
+    jnz contar 
+    jmp fine 
+  sumar: 
+   inc cl
+   inc bx
+   dec al 
+   cmp al, 0
+   jnz contar 
+fine: ret 
+   
+   ORG 2000H  
+  mov bx, offset string
+  mov al, offset fin - offset string 
+  mov ch, car 
+  call contar 
+
+ play:
+  mov al, 00000000b
+  out cb, al 
+
+  mov al, 11001100b
+  out pb, al 
+  
+  mov al, 00000000b
+  out pb, al 
+  dec cl 
+  cmp cl, 0 
+  jnz play 
+  
+
+hlt 
+END 
