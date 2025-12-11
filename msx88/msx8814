@@ -1,0 +1,106 @@
+{ impresora conectada al pio imprime lyrics de taylor swift } 
+
+pa EQU 30H
+ca EQU 32H
+pb EQU 31H
+cb EQU 33H
+
+org 3000h
+configPio: 
+mov al, 00000001b
+out ca, al 
+mov al, 00000000b
+out cb, al 
+ret 
+org 3100h
+strobe0: 
+ in al, pa 
+ and al, 11111101b
+ out pa, al 
+ ret 
+
+ org 3200h
+ strobe1:
+ in al, pa 
+ or al, 00000010b
+ out pa, al 
+ ret 
+ 
+ org 3300h
+ poll: 
+  in al, pa 
+  and al, 1
+  jnz poll 
+  ret 
+ org 3400h
+ strobes: 
+  call strobe0 
+  call strobe1
+  ret 
+
+  org 3500h
+  str1:
+   mov cl, offset fin - offset string
+mov bx, offset string 
+string1:
+
+mov al, [bx]
+out pb, al 
+call strobes
+dec cl 
+inc bx 
+cmp cl, 0
+jnz string1 
+ret 
+
+org 3600h
+ str2:
+   mov cl, offset fin2 - offset string2
+mov bx, offset string2 
+string_2:
+
+mov al, [bx]
+out pb, al 
+call strobes
+dec cl 
+inc bx 
+cmp cl, 0
+jnz string_2 
+ret 
+
+org 3700h
+ str3:
+   mov cl, offset fin3 - offset string3
+mov bx, offset string3 
+string_3:
+
+mov al, [bx]
+out pb, al 
+call strobes
+dec cl 
+inc bx 
+cmp cl, 0
+jnz string_3 
+ret 
+
+  
+
+org 1000h
+string db "We were both young"
+fin db ?
+string2 db "when I first saw you"
+fin2 db ? 
+string3 db "I close my eyes and the flashback starts"
+fin3 db ?
+
+org 2000h
+call configPio 
+call poll
+
+call str1
+call str2
+call str3
+
+
+int 0 
+end
