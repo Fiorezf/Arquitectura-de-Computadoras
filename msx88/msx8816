@@ -1,3 +1,5 @@
+{Escribir un programa que muestre el mensaje "hola" una vez cada 2 segundos y no termine nunca usando el timer }  
+
 eoi equ 20h 
 imr equ 21h
 int1 equ 25h 
