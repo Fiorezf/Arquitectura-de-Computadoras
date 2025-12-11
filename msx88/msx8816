@@ -1,0 +1,41 @@
+{ Escribir un programa que muestre en pantalla "vamos las interrupciones" cada vez que se presiona la tecla F10. El programa termina luego de mostrar 5 veces el mensaje.  }
+
+
+eoi equ 20h
+imr equ 21h
+int0 equ 24h
+
+
+ORG 1000H
+string db "vamos las interrupciones"
+fin db ?
+ 
+ORG 3000H
+imprimir: 
+ mov bx, offset string 
+ mov al, offset fin - offset string 
+ int 7 
+ dec cl 
+ jz fine
+ mov al, 20h
+ out eoi, al 
+ iret 
+
+
+ORG 2000h
+mov cl, 5 
+cli 
+ mov al, 11111110b
+ out imr, al 
+
+ mov al, 10
+ out int0, al 
+
+ mov bx, 40
+ mov word ptr [bx], 3000h 
+
+ sti 
+ loop: jmp loop 
+fine:
+int 0
+end
