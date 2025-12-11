@@ -1,0 +1,47 @@
+eoi equ 20h 
+imr equ 21h
+int1 equ 25h 
+comp equ 11h
+cont equ 10h
+
+
+ORG 1000H
+car db "hola"
+fin db ? 
+ 
+ORG 3000H
+subrutina: 
+mov bx, offset car 
+mov al, offset fin - offset car 
+int 7 
+
+mov al, 20h
+out eoi, al 
+mov al,0
+out cont, al 
+iret 
+
+
+ORG 2000h 
+cli 
+
+mov al, 11111101b
+out imr, al 
+
+mov al, 10
+out int1, al 
+
+mov bx, 40
+mov word ptr [bx], 3000H
+
+mov al, 2
+out comp, al 
+
+mov al, 0 
+out cont, al 
+sti 
+
+lazo: jmp lazo
+
+int 0
+end
