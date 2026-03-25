@@ -1,0 +1,31 @@
+
+org 1000h
+mensj db "Hola buenas tardes" 
+fin db ? 
+cant db ? 
+a db "a" 
+
+
+org 2000h
+ mov ah, a 
+ mov bx, offset mensj
+ mov cl, offset fin - offset mensj 
+ mov ch, 0
+loop:
+ mov al, [bx] 
+ cmp al, ah 
+jz suma 
+inc bx 
+dec cl
+cmp cl, 0 
+jnz loop
+suma: 
+ inc ch
+ dec cl 
+ cmp cl, 0
+ jnz loop 
+ mov cant, ch 
+hlt 
+end
+
+
